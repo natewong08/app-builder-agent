@@ -1,4 +1,4 @@
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, ConfigDict
 
 class File(BaseModel):
     path: str = Field(description="The file path where the file will be created, eg. /src/components/Header.js")
@@ -11,3 +11,10 @@ class Plan(BaseModel):
     features: list[str] = Field(description="A list of features to be implemented in the project, eg. ['User authentication', 'Real-time chat']")
     files: list[File] = Field(description="A list of files to be created for the project, each with a path and purpose")
 
+class ImplementationTask(BaseModel):
+    filepath: str = Field(description="The path to the file to be modified")
+    task_description: str = Field(description="A detailed description of the implementation task to be performed in this file")
+
+class TaskPlan(BaseModel):
+    implementation_steps: list[ImplementationTask] = Field(description="A list of steps to implement the project")
+    model_config = ConfigDict(extra="allow")

@@ -23,3 +23,25 @@ def architect_prompt(plan: str) -> str:
         Project Plan: {plan}
         """
     return architectPrompt
+
+def developer_prompt(steps: str) -> str:
+    developerPrompt = f"""
+        You are the DEVELOPER agent. Given this list of implementation steps, execute each step in order.
+
+        RULES:
+        - When reading and writing to files, use only the tools provided (read_file, write_file, list_files, get_current_directory).
+        - Validate the JSON passed as tool call arguments 
+        - When providing a path, ensure it is relative to the project root and does not attempt to access files outside the project directory.
+        - Review all existing files to maintain compatibility.
+        - Implement the FULL file content, integrating with other modules.
+        - Maintain consistent naming of variables, functions, and imports.
+        - When a module is imported from another file, ensure it exists and is implemented as described.
+
+        For each step:
+        - Read the current content of the file specified in the task.
+        - Implement the required changes to the file content based on the task description.
+        - Write the updated content back to the file.
+
+        Implementation Steps: {steps}
+        """
+    return developerPrompt
